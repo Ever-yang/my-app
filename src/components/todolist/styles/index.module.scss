@@ -1,0 +1,323 @@
+@import './animations.scss';
+
+// Todo 应用主题变量
+$todo-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$todo-gradient-hover: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+$todo-glass: rgba(255, 255, 255, 0.1);
+$todo-glass-hover: rgba(255, 255, 255, 0.15);
+$todo-border: rgba(255, 255, 255, 0.2);
+$todo-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+$todo-radius: 12px;
+$todo-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+// 主容器
+.todoApp {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media (min-width: 768px) {
+    padding: 4rem 2rem;
+    align-items: center;
+  }
+}
+
+.todoContainer {
+  background: $todo-glass;
+  backdrop-filter: blur(10px);
+  border: 1px solid $todo-border;
+  border-radius: $todo-radius;
+  box-shadow: $todo-shadow;
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  animation: glassReveal 0.5s ease-out;
+  margin-top: 2rem;
+
+  @media (min-width: 768px) {
+    margin-top: 0;
+    padding: 3rem;
+  }
+}
+
+// 头部区域
+.todoHeader {
+  margin-bottom: 2rem;
+  text-align: center;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeIn 0.5s ease-out;
+  }
+}
+
+// 统计信息
+.todoStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: $todo-glass;
+  backdrop-filter: blur(5px);
+  border: 1px solid $todo-border;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  transition: $todo-transition;
+
+  &:hover {
+    background: $todo-glass-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .statLabel {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+// 进度条
+.progressBarContainer {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #52c41a 0%, #73d13d 100%);
+  border-radius: 4px;
+  animation: progressFill 0.8s ease-out;
+  transition: width 0.5s ease-out;
+  box-shadow: 0 0 10px rgba(82, 196, 26, 0.3);
+}
+
+// 输入区域
+.todoInputSection {
+  margin-bottom: 2rem;
+}
+
+.todoInput {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid $todo-border;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  transition: $todo-transition;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  }
+
+  &.shake {
+    animation: shake 0.5s ease-in-out;
+    border-color: #ff4d4f;
+  }
+}
+
+.addButton {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: $todo-gradient;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: $todo-transition;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+
+  &:hover {
+    background: $todo-gradient-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// 筛选标签
+.todoFilters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+.filterButton {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $todo-transition;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+
+    &::after {
+      width: 60%;
+    }
+  }
+}
+
+// 列表容器
+.todoList {
+  min-height: 200px;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(255, 255, 255, 0.7);
+
+  .emptyIcon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .emptyText {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .emptySubtext {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// 底部区域
+.todoFooter {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $todo-border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.todoCount {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+}
+
+.clearButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: $todo-transition;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+// 响应式调整
+@media (max-width: 480px) {
+  .todoStats {
+    grid-template-columns: 1fr;
+  }
+
+  .todoFilters {
+    flex-wrap: wrap;
+  }
+
+  .filterButton {
+    flex: 1 1 calc(33.333% - 0.5rem);
+    min-width: 80px;
+  }
+
+  .todoFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .clearButton {
+    width: 100%;
+  }
+}

@@ -1,0 +1,30 @@
+.icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+}
+
+.icon-warning {
+    background-repeat: no-repeat;
+    background-image: url('../../icon/warning.svg');
+}
+
+.alert-wrap {
+    width: 250px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    border-radius: 6px;
+
+    &.wrap-warning {
+        background-color: #fdf6ec;
+        color: #e6a23c;
+    }
+}
+
+.icon-close {
+    background-repeat: no-repeat;
+    background-image: url('../../icon/close.svg');
+}
